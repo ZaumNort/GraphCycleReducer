@@ -4,6 +4,7 @@ import subprocess
 import networkx as nx
 import matplotlib.pyplot as plt
 import random
+import time
 
 # Function to send graph data to the C++ program
 def send_data_to_cpp(v, edges):
@@ -334,14 +335,16 @@ class GraphApp:
             self.process_graph()
 
     def process_graph(self):
+        start_time = time.time()
         # Send data to C++ program and capture its output
         cpp_output = send_data_to_cpp(self.v, self.edges)
         # Parse the output to extract G2, G3, and paths
         graphs_data = parse_cpp_output(cpp_output)
-
+        end_time = time.time()
+        elapsed_time = end_time - start_time
+        print(f"Elapsed time: {elapsed_time:.5f} seconds")
         # Clear previous text
         self.text_output.delete(1.0, tk.END)
-
         # Print paths
         if "Primal Paths" in graphs_data:
             print_paths(graphs_data["Paths"], self.text_output)
@@ -355,7 +358,7 @@ class GraphApp:
             draw_graph(graphs_data["G2"], "Graph G2")
         if "G3" in graphs_data:
             draw_graph(graphs_data["G3"], "Graph G3")
-
+        
         # Save data to a text file
         with open('graph_data.txt', 'w') as f:
             if "G2" in graphs_data:
