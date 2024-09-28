@@ -180,9 +180,9 @@ After C++ processing, the Python script allows visualization of:
 - G3 (Final DAG): Transformed graph without cycles.
 The results are also outputted in textual form, including information about edges, components, and identified paths.
 
-## Transformation Algorithms
+## Algorithms Base
 
-The transformation algorithms implemented in this project are based on the work of A. Dwarakanath, A. Jankiti titled *"Minimum Number of Test Paths for Prime Path and
+The G1->G3 algorithms implemented in this project are based on the work of A. Dwarakanath, A. Jankiti titled *"Minimum Number of Test Paths for Prime Path and
 Other Structural Coverage Criteria"*, 26th IFIP International Conference on Testing Software and Systems
 (ICTSS), Sep 2014, Madrid, Spain. pp.63-79, https://doi.org/10.1007/978-3-662-44857-1_5 hal-01405275
 
