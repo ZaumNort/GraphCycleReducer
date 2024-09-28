@@ -190,11 +190,6 @@ def is_valid_graph(G, start, target):
     if len(visited_to_target) != G.number_of_nodes():
         return False
 
-    # Check that all nodes except target have at least one outgoing edge
-    for node in G.nodes():
-        if node != target and G.out_degree(node) == 0:
-            return False
-
     return True
 
 # Function to generate a random graph
