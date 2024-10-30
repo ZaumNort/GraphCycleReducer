@@ -222,6 +222,44 @@ def random_graph(num_vertices, min_edges, max_edges):
 
     return edges
 
+def dfs_cycle(adj,u,visited, stack):
+    visited[u] = True
+    stack[u] = True
+    
+    for x in adj[u]:
+        if not visited[x]:
+            if dfs_cycle(adj, x, visited, stack):
+                return True
+        elif stack[x]:
+            return True
+
+    stack[u] = False
+    return False
+
+
+def directed_cycle(edges):
+    adj_list = {}
+    
+    for from_node, to_node in edges:
+        if from_node not in adj_list:
+            adj_list[from_node] = []
+        adj_list[from_node].append(to_node)
+
+        if to_node not in adj_list:
+            adj_list[to_node] = []
+
+    
+    visited = {key: False for key in adj_list}  
+    stack = {key: False for key in adj_list}
+
+    for node in adj_list:
+        if not visited[node]:
+           if dfs_cycle(adj_list, node, visited, stack):
+            return True
+
+    return False
+
+
 # Main application class
 class GraphApp:
     def __init__(self, master):
@@ -356,8 +394,16 @@ class GraphApp:
         # Draw G2 and G3
         if "G2" in graphs_data:
             draw_graph(graphs_data["G2"], "Graph G2")
+            if directed_cycle(graphs_data["G2"]):
+                print("G2 Contains Cycle")
+            else:
+                print("No Cycle in G2")
         if "G3" in graphs_data:
             draw_graph(graphs_data["G3"], "Graph G3")
+            if directed_cycle(graphs_data["G3"]):
+                print("G3 Contains Cycle")
+            else:
+                print("No Cycle in G3")
         
         # Save data to a text file
         with open('graph_data.txt', 'w') as f:
